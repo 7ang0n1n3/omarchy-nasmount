@@ -139,6 +139,8 @@ Machine removal deletes the dispatcher, managed sudoers rule, and installed exec
 
 ## Development and validation
 
+See [CHANGELOG.md](CHANGELOG.md) for version history and notable changes.
+
 Run the available checks with one command:
 
 ```sh
