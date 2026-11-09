@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -euo pipefail
+export PATH=/usr/sbin:/usr/bin:/sbin:/bin
+HELPER=/usr/local/lib/omarchy-nas/omarchy-nas-helper.py
+case "${1:-}" in
+  capabilities)
+    printf '%s\n' '{"protocol_version":1,"save_stdin":true}' ;;
+  status|mount|unmount|mount-all|unmount-all|reconcile|save|delete)
+    exec /usr/bin/sudo -n -- "$HELPER" "$@" ;;
+  *) echo 'Usage: omarchy-nasctl capabilities | status --json | save --stdin | mount ID | unmount ID | mount-all | unmount-all | reconcile | delete ID' >&2; exit 2 ;;
+esac

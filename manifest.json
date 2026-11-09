@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "io.github.tangonine.omarchy-nas",
+  "name": "NAS Auto Mount",
+  "version": "0.3.0",
+  "author": "tangonine",
+  "license": "MIT",
+  "description": "NAS status and controls for the separately installed omarchy-nas machine integration.",
+  "kinds": [
+    "service",
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "BarWidget.qml",
+    "service": "Service.qml"
+  },
+  "barWidget": {
+    "displayName": "NAS Auto Mount",
+    "description": "NAS mount status and manual controls.",
+    "category": "Network",
+    "allowMultiple": false,
+    "defaultSection": "right",
+    "defaults": {
+      "refreshIntervalSec": 5
+    },
+    "schema": [
+      {
+        "key": "refreshIntervalSec",
+        "type": "integer",
+        "label": "Refresh interval (seconds)",
+        "min": 2,
+        "max": 60,
+        "step": 1,
+        "defaultValue": 5
+      }
+    ]
+  }
+}

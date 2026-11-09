@@ -1,0 +1,35 @@
+# Python and test artifacts
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+
+# Qt/tool caches and build output
+.cache/
+build/
+dist/
+*.qmlc
+*.jsc
+
+# Local editor/OS files
+.idea/
+.vscode/
+.DS_Store
+*~
+*.swp
+*.swo
+
+# Local configuration, credentials, and private backups
+.env
+.env.*
+!.env.example
+*.credentials
+/credentials/
+/config.json
+*.pem
+*.key
+*.bak
+*.log

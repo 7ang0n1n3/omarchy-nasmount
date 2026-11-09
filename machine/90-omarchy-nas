@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# NetworkManager dispatcher hook. Reconcile after connectivity changes.
+case "${2:-}" in
+  up|down|vpn-up|vpn-down|connectivity-change)
+    /usr/local/lib/omarchy-nas/omarchy-nas-helper.py reconcile >/dev/null 2>&1 || logger -t omarchy-nas "reconcile failed"
+    ;;
+esac
+exit 0
