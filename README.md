@@ -42,57 +42,47 @@ The current plugin version is **0.3.0** and requires **machine protocol 1**. Ins
 
 ## Setup
 
-Clone the repository and enter its directory after installing the prerequisites:
+Run these commands in a terminal on your Omarchy desktop.
+
+### 1. Install dependencies and the machine integration
+
+Install the required packages, then clone the repository:
 
 ```sh
-git clone https://github.tangonine.net/OMARCHY/omarchy-nasmount.git
+sudo pacman -S --needed git python sudo networkmanager util-linux cifs-utils nfs-utils
+git clone https://github.com/7ang0n1n3/omarchy-nasmount.git
 cd omarchy-nasmount
 ```
 
-If you already have a local checkout, run the following commands from that directory.
+If you already have a checkout, enter that directory instead of cloning it again.
 
-### 1. Install the machine integration
-
-Review the files in `machine/`, then run:
+Review the files in `machine/`, then install the helper for your current Linux user:
 
 ```sh
-sudo python3 machine/setup.py install --user YOUR_LOCAL_USER
+sudo python3 machine/setup.py install --user "$USER"
 ```
 
-Replace `YOUR_LOCAL_USER` with your Linux login name. Setup installs the CLI, root helper, NetworkManager dispatcher, and a passwordless sudo rule limited to the NAS helper. The selected user can administer all shares in this machine's NAS configuration.
+Run this from your normal user session so `$USER` identifies the account that uses the desktop. Setup installs the CLI, root helper, NetworkManager dispatcher, and a passwordless sudo rule limited to the NAS helper. The selected user can administer all shares in this machine's NAS configuration.
 
-Setup preserves existing configuration and credentials. If it finds an unmanaged `/etc/sudoers.d/omarchy-nas` rule, it stops for administrator review instead of overwriting it.
+Setup preserves existing configuration and credentials. If it reports an unmanaged `/etc/sudoers.d/omarchy-nas` rule, stop and review the existing rule before continuing; setup will not overwrite it.
 
-### 2. Install the shell plugin
-
-Validate the plugin directory:
+### 2. Install and enable the shell plugin
 
 ```sh
-omarchy plugin validate .
+omarchy plugin add https://github.com/7ang0n1n3/omarchy-nasmount.git --enable
 ```
 
-Install and enable the published repository:
+Its plugin ID is `io.github.tangonine.omarchy-nas`, and its default bar section is the right side. The NAS icon should appear after the plugin is enabled.
+
+If the plugin is already installed, including a manually copied local version, enable it instead of adding it again:
 
 ```sh
-omarchy plugin add https://github.tangonine.net/OMARCHY/omarchy-nasmount.git --enable
-```
-
-Its plugin ID is `io.github.tangonine.omarchy-nas`, and its default bar section is the right side.
-
-For a local checkout before publishing, copy the runtime files instead:
-
-```sh
-plugin_dir="$HOME/.config/omarchy/plugins/io.github.tangonine.omarchy-nas"
-mkdir -p "$plugin_dir"
-cp -r manifest.json BarWidget.qml Panel.qml Service.qml UiText.js i18n "$plugin_dir/"
-omarchy plugin validate "$plugin_dir"
-omarchy-shell shell rescanPlugins
 omarchy plugin enable io.github.tangonine.omarchy-nas --section right
 ```
 
-Repeat the copy when updating a manually installed local plugin; Git-based plugin updates require a repository installation.
+Enabling an existing installation does not update its files or convert a manually copied installation into a Git-based one.
 
-`omarchy plugin add` handles plugin files and enablement; it does not run `machine/setup.py`, install packages, or configure privileged access.
+`omarchy plugin add` handles plugin files and enablement; it does not run `machine/setup.py`, install packages, or configure privileged access. Both steps above are required for a new installation.
 
 ### 3. Add a share
 
