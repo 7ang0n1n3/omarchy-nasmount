@@ -6,6 +6,7 @@ Associate a share with a NetworkManager connection, such as your home Wi-Fi or V
 
 For example, a share named `media` on `nas.example` can appear at `/mnt/nas/media` while you are connected to your home network. Once mounted, its files are accessible through your file manager and other applications.
 
+
 ## Features
 
 - Add, edit, and remove SMB/CIFS or NFS shares from the bar popup.
