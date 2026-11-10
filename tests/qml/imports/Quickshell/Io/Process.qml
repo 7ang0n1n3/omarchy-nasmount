@@ -8,6 +8,5 @@ QtObject {
   property string received: ""
   signal started()
   signal exited(int exitCode, int exitStatus)
-  signal error(int error)
   function write(value) { received += value }
 }

@@ -2,7 +2,12 @@
 
 Notable changes to NAS Auto Mount for Omarchy are recorded here, newest first.
 
-## Unreleased
+## 0.3.1 — 2026-11-10
+
+### Fixed
+
+- Removed the unsupported Quickshell Process `onError` handler that prevented the shared service from loading and caused the popup to show “Backend unavailable”. Failed starts continue to use the existing completion check and watchdog.
+- Removed the nonexistent error signal from the QML process stub and added regression coverage for a failed start without an exit notification.
 
 ### Added
 
@@ -11,6 +16,7 @@ Notable changes to NAS Auto Mount for Omarchy are recorded here, newest first.
 ### Changed
 
 - Clarified installation from the GitHub repository, including dependency installation, machine setup, and enabling an existing plugin installation.
+- Documented recovery from cached QML after updating, automount diagnostics, and manual migration of legacy mount paths to `/mnt/nas/` while preserving saved credentials. The plugin does not migrate mount paths automatically.
 
 ## 0.3.0 — Initial repository version (2026-11-09)
 

@@ -39,7 +39,7 @@ Automatic mounting belongs to the machine integration, so it continues to respon
 - Python 3.10 or newer, sudo (including `visudo`), util-linux, cifs-utils, and nfs-utils.
 - An existing, reachable SMB/CIFS share or NFS export with suitable server-side permissions.
 
-The current plugin version is **0.3.0** and requires **machine protocol 1**. Installing the shell plugin alone does not install the privileged helper or its dependencies.
+The current plugin version is **0.3.1** and requires **machine protocol 1**. Installing the shell plugin alone does not install the privileged helper or its dependencies.
 
 ## Setup
 
@@ -118,6 +118,20 @@ When editing a share, leave its SMB username and password blank to keep saved cr
 - Back up existing NAS configuration and credentials privately before upgrading. Older mount paths outside `/mnt/nas`, custom mount options, and existing sudoers grants may require administrator review.
 
 Operations have time and output limits. If a request times out, refresh status before retrying because part of the operation may already have completed.
+
+## Troubleshooting
+
+### Popup shows “Backend unavailable”
+
+Version 0.3.0 used an unsupported Quickshell Process `onError` handler, preventing the shared service from loading. Update the plugin to 0.3.1 or later. If hot reload still reports the old handler in the shell log, run `omarchy restart shell` to clear the cached QML; this briefly restarts the bar and shell popups.
+
+### Shares do not mount automatically
+
+Run `omarchy-nasctl status` to check the active network, share network match, credentials, and mount status. Run `omarchy-nasctl reconcile` to attempt automatic mounting and display any errors.
+
+Legacy mount points such as `/mnt/media` are rejected by the machine integration. For an unmounted share, edit its mount point to a path below `/mnt/nas`, such as `/mnt/nas/media`, and save. Leave the SMB username and password blank to retain saved credentials. Update any file-manager bookmarks or application paths that use the old location. This changes where the share is mounted; it does not move files on the NAS.
+
+Status polling does not retry mounts. Reconciliation runs after network changes and successful saves, or when explicitly requested with the CLI.
 
 ## Removal
 

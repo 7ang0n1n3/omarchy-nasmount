@@ -44,6 +44,18 @@ TestCase {
     verify(!service.saveMount({password:"x".repeat(17000)}))
     verify(!service.busy); service.alive=false
   }
+  function test_failed_start_without_exit() {
+    wait(1) // Let the initial polling tick run while the fixture is inactive.
+    service.alive = true
+    verify(service.launch("capabilities", ["capabilities"], ""))
+    var process = findChild(service, "nasProcess")
+    process.running = false
+    tryCompare(service, "completed", true, 1000)
+    compare(service.state, "unsupported")
+    verify(!service.canAct)
+    compare(service.pendingJson, "")
+    service.alive = false
+  }
   function test_status_states_data() {
     return [
       {tag:"empty", mounts:[], active:[], expected:"empty"},

@@ -136,7 +136,8 @@ Item {
       if (root.pendingJson !== "") { write(root.pendingJson); root.pendingJson = ""; stdinEnabled = false }
     }
     onExited: (exitCode, exitStatus) => root.complete(exitCode)
-    onError: error => { root.complete(1); root.supported = false; root.unavailable("unavailable", "NAS helper unavailable; install machine integration") }
+    // Process has no error signal; failed starts are handled by finishCheck
+    // and the watchdog, including failures without an exited notification.
     onRunningChanged: {
       if (!running && watchdog.running) finishCheck.restart()
     }
